@@ -35,14 +35,6 @@ The following scripts reproduce the numerical studies in the paper.
 - `DPalg/` — code from Franzolini, B. and Gaffi, F. (2026), *Complexity bounds for Dirichlet process slice samplers*.  
   [arXiv:2602.00878](https://arxiv.org/abs/2602.00878)
 
-### RData
-
-- `_Real_data.RData` — results on the real datasets.
-- `sim1.RData` — results for Simulation Scenario 1.
-- `sim2.RData` — results for Simulation Scenario 2.
-- `sim3.RData` — results for Simulation Scenario 3.
-- `sim4.RData` — results for Simulation Scenario 4.
-
 ## Required R packages
 
 ### Packages used by this repository
