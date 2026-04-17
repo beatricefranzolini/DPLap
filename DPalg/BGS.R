@@ -1,0 +1,141 @@
+################################################################################
+## this code contains the MCMC function to run the block Gibbs sampler
+#  for DP mixture of univariate Normals
+#  Kernel:   y | mu ~ N(mu, sigma2)
+#  Base:     mu ~ N(mu0, tau20)
+#  DP:       G ~ DP(alpha, N(mu0, tau20)) with alpha random
+################################################################################
+
+# -------------------------------------------------------------------------
+# Main sampler
+# Inputs:   Y      -> data as a n X 1 vector
+#           L      -> num. of component of the truncated approximation
+#           Tot    -> number of iterations 
+#           c_init -> initialization for the partition, 
+#                     if NULL is st to k-means solution with 5 clusters
+#           seed   -> seed 
+#           hyper  -> (kernel variance, base measure mean, base measure variance)
+# Outputs:   c_samples -> chain of clustering labels
+#            phis      -> chain of atoms
+#            H         -> chain of number of cluster
+#            time      -> wall-clock time needed to run the chain
+# -------------------------------------------------------------------------
+
+# -------------------------------------------------------------------------
+# Example usage (toy):
+# -------------------------------------------------------------------------
+
+# Simulate data
+# set.seed(1)
+# Y <- rnorm(2000, mean = c(rep(-3,1000), rep(3,1000)), sd = 1)
+
+# Run sampler
+# fit_SS = dp_BGS_mixmodel_normal_normal(Y, seed = 0)
+# -------------------------------------------------------------------------
+
+dp_BGS_mixmodel_normal_normal <- function(
+    Y,
+    L = 10,
+    Tot = 3000,
+    c_init = NULL,
+    seed   = NULL,
+    hyper = c(1,0,1)
+){
+  sigma2 = hyper[1]
+  mu0    = hyper[2]
+  tau20  = hyper[3]
+  alpha  = 1
+  
+  lik  <- function(y, phi){
+    dnorm(y, phi, sqrt(sigma2), log = TRUE)
+  }
+  
+  post <- function(y_k){
+    if(n_h[h]>0){
+      # Posterior of phi_k | y_idx ~ N(mean_n, tau2_n)
+      tau2_n  =  1 / (n_h[h] / sigma2 + 1 / tau20)
+      mu_n    =  tau2_n * (sum(y_k) / sigma2 + mu0 / tau20)
+      rnorm(1, mu_n, sqrt(tau2_n))
+    }else{
+      rnorm(1, mu0, sqrt(tau20))
+    }
+  }
+  
+  if (!is.null(seed)) set.seed(seed)
+  
+  n = length(Y)
+  if (is.null(c_init)) {
+    c = kmeans(Y, 
+               centers = min(5, L))$cluster
+  } else {
+    stopifnot(length(c_init) == n)
+    c = as.integer(c_init)
+  }
+  phis = NULL
+  
+  # storage
+  out_c    = vector("list", Tot)
+  out_phis = vector("list", Tot)
+  out_pi   = vector("list", Tot)
+  out_H    = integer(Tot)
+  
+  store_idx  = 0L
+  start.time = Sys.time()             #save starting time 
+  
+  pb <- progress_bar$new(
+    format = " MCMC [:bar] :percent Estimated completion time: :eta",
+    total = Tot, clear = FALSE, width= 100)
+  
+  for (t in seq_len(Tot)) {
+
+    n_h = tabulate(c, nbins = L)  # n_h[h] = sum_i 1(c_i=h)
+    
+    pi  = rdirichlet(n = 1, n_h)
+
+    for(h in seq_len(L)){
+      phis[h] = post(Y[c==h])
+    }
+    
+    for (i in seq_len(n)) {
+      # evaluate log-likelihoods for k in Ai
+      logw = log(pi) + lik(Y[[i]], phis) 
+      m    = max(logw)
+      w    = exp(logw - m)
+      c[i] = sample(L, size = 1, prob = w)
+    }
+    H = length(unique(c))
+    alpha = rgamma(1, 3 + H, 
+                   3*log(n) - log(rbeta(1, alpha, n)) )
+    
+    # store
+    store_idx = store_idx + 1L
+    out_c[[store_idx]]    = c
+    out_phis[[store_idx]] = phis
+    out_pi[[store_idx]]   = pi
+    out_H[store_idx]      = H
+    
+    if(t <= 10){
+      if(difftime(Sys.time(), start.time, units = "secs")> 1){
+        message(" 1 sec threshold reached - aborted")
+        return(list(
+          c_samples = out_c, 
+          phis      = out_phis,
+          pi        = out_pi,
+          H         = out_H,
+          time      = Sys.time() - start.time
+        ) )
+      }
+    }
+    pb$tick()
+    
+  }
+  end.time = Sys.time()
+  
+  return(list(
+    c_samples = out_c, 
+    phis      = out_phis,
+    pi        = out_pi,
+    H         = out_H,
+    time      = end.time - start.time
+  ) )
+}
