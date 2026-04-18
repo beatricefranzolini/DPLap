@@ -197,7 +197,7 @@ for(n in sample_sizes){
     Skew_LAP[[i_count]], SS[[i_count]])
 }
 
-tvBoxplot_real_box_df = make_tv_boxplot_df(LAP, Skew_LAP, sample_sizes, xgrid)
+tv_box_df = make_tv_boxplot_df(LAP, Skew_LAP, sample_sizes, xgrid)
 
 ggplot(tv_box_df, aes(x = method, y = TV, fill = method)) +
   geom_boxplot(outlier.size = 0.8, alpha = 0.8) +
