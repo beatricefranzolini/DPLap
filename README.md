@@ -8,7 +8,7 @@ R code implementing Laplace and Skew-Laplace approximations for posterior densit
 
 If you use this repository in your research, please cite:
 
-> Franzolini, B. and Pozza, F. (2026). *Laplace and skew-Laplace sampling for posterior approximations in Dirichlet process mixtures*.
+> Franzolini, B. and Pozza, F. (2026). *Laplace and skew-Laplace approximations for Dirichlet process mixture posterior density*.
 
 ## Repository structure
 
