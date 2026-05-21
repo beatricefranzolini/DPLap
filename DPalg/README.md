@@ -1,18 +1,20 @@
+## Full repository available at [https://github.com/beatricefranzolini/DPalg](https://github.com/beatricefranzolini/DPalg)
+
 # DPalg
 R codes implementing MCMC algorithms for DP mixture of univariate Normals
 
-Kernel:   y | mu ~ N(mu, sigma2)
-
-Base:     mu ~ N(mu0, tau20)
-
-DP:       G ~ DP(alpha, N(mu0, tau20)) with alpha random
-
-**Authors**: [Beatrice Franzolini](https://beatricefranzolini.github.io/) and [Francesco Gaffi](https://francescogaffi.github.io/)
+| Level | Distribution |
+|---|---|
+| Kernel | `y_i \| μ_i, σ² ~ Normal(μ_i, σ²)` |
+| Mixing distribution | `μ_i \| G ~ G` |
+| Dirichlet process prior | `G \| α ~ DP(α, G₀)` |
+| Base measure | `G₀ = Normal(μ₀, τ₀²)` |
+| Concentration parameter | `α ~ p(α)` |
 
 ## Citation 
 Please cite the following publication if you use this repository in your research:
 
-[Franzolini, B.](https://beatricefranzolini.github.io/) & [Gaffi, F.](https://francescogaffi.github.io/), (2026). Complexity bounds for Dirichlet process slice samplers. [arXiv:2602.00878](https://arxiv.org/abs/2602.00878)
+> [Franzolini, B.](https://beatricefranzolini.github.io/) & [Gaffi, F.](https://francescogaffi.github.io/), (2026). *Complexity bounds for Dirichlet process slice samplers*. 43rd International Conference on Machine Learning (ICML 2026)
 
 ## Contents 
 
@@ -36,25 +38,15 @@ Please cite the following publication if you use this repository in your researc
 
 ## R libraries needed to run the scripts
 
-library(LaplacesDemon)  # version 16.1.6      to sample from finite Dirichlet  
-
-library(progress)       # version 1.2.3       to draw the progress bar  
-
-library(rstudioapi)     # version 0.17.1      to set working directory  
-
-library(ggplot2)        # version 4.0.1       to plot  
-
-library(patchwork)      # version 1.3.2       to plot  
-
-library(fossil)         # version 0.4.0       to compute rand index  
-
-library(salso)          # version 0.3.53      to compute psm and point estimate
+- `LaplacesDemon` (version 16.1.6) — sampling from finite Dirichlet distributions
+- `progress` (version 1.2.3) — progress bars
+- `rstudioapi` (version 0.17.1) — working directory handling
+- `ggplot2` (version 4.0.1) — plotting
+- `patchwork` (version 1.3.2) — combining plots
+- `fossil` (version 0.4.0) — Rand index computation
+- `salso` (version 0.3.53) — posterior similarity matrices and clustering point estimates
 
 ## Questions or bugs
 
-
 For bug reporting purposes, e-mail [Beatrice Franzolini](https://beatricefranzolini.github.io/) (franzolini@pm.me)
-
-
-
 
