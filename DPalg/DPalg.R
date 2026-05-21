@@ -13,8 +13,8 @@ library(salso)          # version 0.3.53      to compute psm and point estimate
 this_dir = dirname(normalizePath(sys.frame(1)$ofile))
 
 source(file.path(this_dir, "Slice.R"))        #posterior Slice Sampler MCMC 
-source(file.path(this_dir, "SlicenoAtoms.R")) #posterior Slice Sampler MCMC with marginalized atoms
-source(file.path(this_dir, "CRPwithAtoms.R")) #posterior marginal MCMC with atom sampling 
-source(file.path(this_dir, "CRPnoAtoms.R"))   #posterior marginal MCMC with marginalized atoms 
-source(file.path(this_dir, "BGS.R"))          #Block Gibbs sampler
+#source(file.path(this_dir, "SlicenoAtoms.R")) #posterior Slice Sampler MCMC with marginalized atoms
+#source(file.path(this_dir, "CRPwithAtoms.R")) #posterior marginal MCMC with atom sampling 
+#source(file.path(this_dir, "CRPnoAtoms.R"))   #posterior marginal MCMC with marginalized atoms 
+#source(file.path(this_dir, "BGS.R"))          #Block Gibbs sampler
 source(file.path(this_dir, "utils.R"))        #Likelihoods eval & atoms sampling 
