@@ -32,8 +32,7 @@ The following scripts reproduce the numerical studies in the paper.
 
 ### External code
 
-- `DPalg/` — code from Franzolini, B. and Gaffi, F. (2026), *Complexity bounds for Dirichlet process slice samplers*.  
-  [arXiv:2602.00878](https://arxiv.org/abs/2602.00878)
+- `DPalg/` — code from Franzolini, B. and Gaffi, F. (2026), *Complexity bounds for Dirichlet process slice samplers*. 43rd International Conference on Machine Learning (ICML 2026) 
 
 ## Required R packages
 
