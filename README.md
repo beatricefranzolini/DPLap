@@ -9,9 +9,9 @@ The repository also includes the variational Bayes and slice-sampling methods us
 
 If you use this repository in your research, please cite:
 
-> Franzolini, B. and Pozza, F. (2026). Laplace and skew-Laplace approximations for Dirichlet process mixture posterior density. *Measurement: Interdisciplinary Research and Perspectives*, in press.
+> Franzolini, B. and Pozza, F. (2026). Laplace and skew-Laplace approximations for Dirichlet process mixture posterior density. *Measurement: Interdisciplinary Research and Perspectives*, in press. DOI - 10.1080/15366367.2026.2766152
 
-A preprint version is available at [https://beatricefranzolini.github.io/FranzoliniPozza2026.pdf](https://beatricefranzolini.github.io/FranzoliniPozza2026.pdf).
+The paper is also available at [https://beatricefranzolini.github.io/FranzoliniPozza2026.pdf](https://beatricefranzolini.github.io/FranzoliniPozza2026.pdf).
 
 ```bibtex
 @article{franzolini2026laplace,
